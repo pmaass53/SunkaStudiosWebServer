@@ -6,7 +6,7 @@ import vhost from "vhost"
 
 console.log("Importing Modules & Constants...")
 const PORT = 8080
-import authDB from "./database/auth_db.js"
+import AUTHDB from "./database/auth_db.js"
 
 console.log("Creating Server...")
 const app = express()
@@ -21,4 +21,4 @@ app.listen(PORT, (err) => {
   } else {
     console.log(`Listening on Port ${PORT}")
   }
-  })
+})
