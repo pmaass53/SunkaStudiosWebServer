@@ -14,11 +14,4 @@ const app = express()
 console.log("Configuring Server...")
 app.use(vhost("auth.local", auth_app))
 
-app.listen(PORT, (err) => {
-  if (err) {
-    console.log(`Error Listening on Port ${PORT}`)
-    console.error(err)
-  } else {
-    console.log(`Listening on Port ${PORT}")
-  }
-})
+app.listen(PORT)
