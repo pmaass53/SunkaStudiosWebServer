@@ -6,7 +6,7 @@ import vhost from "vhost"
 
 console.log("Importing Modules & Constants...")
 const PORT = 8080
-import AUTHDB from "./database/auth_db.js"
+import auth_app from "./apps/auth.js"
 
 console.log("Creating Server...")
 const app = express()
