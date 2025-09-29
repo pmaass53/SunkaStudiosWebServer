@@ -17,6 +17,6 @@ echo "Installing Packages"
 npm install --omit-dev
 
 echo "Starting Server"
-pm2 start /home/ubuntu/SunkaStudiosWebServer/server/serve.js --name webserver
+pm2 start /home/ubuntu/SunkaStudiosWebServer/server/server.js --name webserver
 
 echo "Update Complete"
