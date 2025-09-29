@@ -10,6 +10,7 @@ import { fileURLToPath } from "url"
 console.log("Importing Modules & Constants...")
 export const PORT = 8080
 import { APPS_DIR } from "./paths.js"
+import { SSL_DIR } from "./paths.js"
 // import various subdomains
 const auth_app = (await import(path.join(APPS_DIR, "auth.js"))).default
 const homepage_app = (await import(path.join(APPS_DIR, "homepage.js"))).default
@@ -25,8 +26,9 @@ app.use(homepage_app)
 // listen for requests
 // SSL config
 const ssl = {
-  key: fs.readFileSync()
+  key: fs.readFileSync(path.join(SSL_DIR, "key.pem")),
+  cert: fs.readFileSync(path.join(SSL_DIR, "cert.pem"))
 }
-app.listen(PORT, ()=> {
-  console.log(`Listening On Port ${PORT}`)
+https.createServer(ssl, app).listen(443, () => {
+  console.log("HTTPS Server Listening on Port 443")
 })
