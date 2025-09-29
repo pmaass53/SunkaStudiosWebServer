@@ -2,4 +2,7 @@
   "name": "Sunka Studios Web Server",
   "version": "1.0.0",
   "type": "module"
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  }
 }
