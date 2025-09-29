@@ -1,6 +1,7 @@
 console.log("Starting Server...")
 
 console.log("Importing Packages...")
+import https from "https"
 import express from "express"
 import vhost from "vhost"
 import path from "path"
@@ -22,6 +23,10 @@ app.use(vhost("auth.localhost", auth_app))
 app.use(homepage_app)
 
 // listen for requests
+// SSL config
+const ssl = {
+  key: fs.readFileSync()
+}
 app.listen(PORT, ()=> {
   console.log(`Listening On Port ${PORT}`)
 })
