@@ -8,6 +8,7 @@ console.log("Importing Modules & Constants...")
 const PORT = 8080
 // import various subdomains
 import auth_app from "./apps/auth.js"
+import homepage_app from "./apps/homepage.js"
 
 console.log("Creating Server...")
 const app = express()
@@ -15,6 +16,7 @@ const app = express()
 console.log("Configuring Server...")
 // use vhost to redirect requests to appropriate servers
 app.use(vhost("auth.localhost", auth_app))
+app.use(vhost("localhost", homepage_app))
 
 // listen for requests
 app.listen(PORT, ()=> {
