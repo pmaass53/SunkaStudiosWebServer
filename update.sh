@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "Updating Server"
+
 APP_DIR="/home/ubuntu/latest/SunkaStudiosWebServer"
 REPO="https://github.com/pmaass53/SunkaStudiosWebServer"
 
@@ -16,3 +18,5 @@ npm install --omit-dev
 
 echo "Starting Server"
 pm2 start /home/ubuntu/SunkaStudiosWebServer/server/serve.js --name webserver
+
+echo "Update Complete"
