@@ -2,7 +2,7 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 
-import { PUBLIC_DIR } from "./paths.js"
+import { PUBLIC_DIR } from "../paths.js"
 
 const auth_app = express()
 
