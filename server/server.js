@@ -10,8 +10,8 @@ console.log("Importing Modules & Constants...")
 export const PORT = 8080
 import { APPS_DIR } from "./paths.js"
 // import various subdomains
-import auth_app from path.join(APPS_DIR, "auth.js")
-import homepage_app from path.join(APPS_DIR, "auth.js")
+const auth_app = (await import(path.join(APPS_DIR, "auth.js"))).default
+const homepage_app = (await import(path.join(APPS_DIR, "homepage.js"))).default
 
 console.log("Creating Server...")
 const app = express()
