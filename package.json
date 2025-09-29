@@ -1,8 +1,9 @@
 {
-  "name": "Sunka Studios Web Server",
-  "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "test": "echo \"No tests specified\" && exit 0"
+  "dependencies": {
+    "express": "^5.1.0",
+    "pm2": "^6.0.13",
+    "sqlite3": "^5.1.7",
+    "vhost": "^3.0.2"
   }
 }
