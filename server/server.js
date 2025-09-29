@@ -3,9 +3,12 @@ console.log("Starting Server...")
 console.log("Importing Packages...")
 import express from "express"
 import vhost from "vhost"
+import path from "path"
+import { fileURLToPath } from "url"
 
 console.log("Importing Modules & Constants...")
-const PORT = 8080
+export const PORT = 8080
+export const CWD = path.dirname(fileURLToPath(import.meta.url))
 // import various subdomains
 import auth_app from "./apps/auth.js"
 import homepage_app from "./apps/homepage.js"
