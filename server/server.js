@@ -8,10 +8,10 @@ import { fileURLToPath } from "url"
 
 console.log("Importing Modules & Constants...")
 export const PORT = 8080
-export const CWD = path.dirname(fileURLToPath(import.meta.url))
+import { APPS_DIR } from "./paths.js"
 // import various subdomains
-import auth_app from "./apps/auth.js"
-import homepage_app from "./apps/homepage.js"
+import auth_app from path.join(APPS_DIR, "auth.js")
+import homepage_app from path.join(APPS_DIR, "auth.js")
 
 console.log("Creating Server...")
 const app = express()
