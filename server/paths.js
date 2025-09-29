@@ -9,4 +9,4 @@ export const SERVER_DIR = __dirname
 export const PUBLIC_DIR = path.join(__dirname, "public")
 export const APPS_DIR = path.join(__dirname, "apps")
 export const DATABASE_DIR = path.join(__dirname, "database")
-export const SSL_ROOT = path.join(__dirname, "ssl")
+export const SSL_DIR = path.join(__dirname, "ssl")
