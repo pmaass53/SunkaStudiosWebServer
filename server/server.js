@@ -6,6 +6,7 @@ import express from "express"
 import vhost from "vhost"
 import path from "path"
 import fs from "fs"
+import rateLimit from "express-rate-limit"
 import { fileURLToPath } from "url"
 
 console.log("Importing Modules & Constants...")
@@ -20,6 +21,8 @@ console.log("Creating Server...")
 const app = express()
 
 console.log("Configuring Server...")
+// use rateLimit to prevent DDoS Attacks
+app.use(rateLimit({windowMS: 60000, max: 100})
 // use vhost to redirect requests to appropriate servers
 app.use(vhost("auth.localhost", auth_app))
 app.use(homepage_app)
