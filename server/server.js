@@ -23,7 +23,7 @@ const app = express()
 
 console.log("Configuring Server...")
 // use rateLimit to prevent DDoS Attacks
-app.use(rateLimit({windowMS: 60000, max: 100})
+app.use(rateLimit({windowMS: 60000, max: 100}))
 // add safety headers
 app.use(helmet())
 // use vhost to redirect requests to appropriate servers
