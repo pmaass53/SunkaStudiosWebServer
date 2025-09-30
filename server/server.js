@@ -1,7 +1,6 @@
 console.log("Starting Server...")
 
 console.log("Importing Packages...")
-import https from "https"
 import express from "express"
 import vhost from "vhost"
 import path from "path"
@@ -31,11 +30,6 @@ app.use(vhost("auth.localhost", auth_app))
 app.use(homepage_app)
 
 // listen for requests
-// SSL config
-const ssl = {
-  key: fs.readFileSync(path.join(SSL_DIR, "key.pem")),
-  cert: fs.readFileSync(path.join(SSL_DIR, "cert.pem"))
-}
-https.createServer(ssl, app).listen(443, () => {
-  console.log("HTTPS Server Listening on Port 443")
+app.listen(PORT, () => {
+	console.log(`Listening on Local Port ${PORT}`)
 })
