@@ -7,6 +7,7 @@ import path from "path"
 import fs from "fs"
 import rateLimit from "express-rate-limit"
 import helmet from "helmet"
+import morgan from "morgan"
 import { fileURLToPath } from "url"
 
 console.log("Importing Modules & Constants...")
@@ -25,6 +26,8 @@ console.log("Configuring Server...")
 app.use(rateLimit({windowMS: 60000, max: 100}))
 // add safety headers
 app.use(helmet())
+// log requests
+app.use(morgan(":method :url :status - :response-time ms"))
 // use vhost to redirect requests to appropriate servers
 app.use(vhost("auth.localhost", auth_app))
 app.use(homepage_app)
