@@ -29,7 +29,7 @@ app.use(helmet())
 // log requests
 app.use(morgan(":method :url :status - :response-time ms"))
 // use vhost to redirect requests to appropriate servers
-app.use(vhost("auth.localhost", auth_app))
+app.use(vhost("auth.sunkastudios.xyz", auth_app))
 app.use(homepage_app)
 
 // listen for requests
