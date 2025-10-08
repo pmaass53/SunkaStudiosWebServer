@@ -14,6 +14,7 @@ console.log("Importing Modules & Constants...")
 // internal port
 // DO NOT MODIFY
 export const PORT = 8080
+export const NONCE = "ain-turbowarp-security-nonce"
 // import relative paths
 import { APPS_DIR } from "./paths.js"
 import { SSL_DIR } from "./paths.js"
@@ -32,7 +33,7 @@ app.use(rateLimit({windowMS: 60000, max: 100}))
 app.use(helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      "script-src": ["'self'", "'nonce-xyz123'"], // fixed security nonce for ain files
+      "script-src": ["'self'", `'${NONCE}'`], // fixed security nonce for ain files
 	},
 }));
 // log requests
