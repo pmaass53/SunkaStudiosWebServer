@@ -18,12 +18,12 @@ auth_app.get("/v1/index.html", (req, res) => {
 })
 
 auth_app.get("/v1/main.js", (req, res) => {
-  res.writeHead(200, {"Content-Type": "text/html"})
+  res.writeHead(200, {"Content-Type": "text/javascript"})
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "main.js")))
 })
 
 auth_app.get("/v1/main.css", (req, res) => {
-  res.writeHead(200, {"Content-Type": "text/html"})
+  res.writeHead(200, {"Content-Type": "text/css"})
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "main.css")))
 })
 
