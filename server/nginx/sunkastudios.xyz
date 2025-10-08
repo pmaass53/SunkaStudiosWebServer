@@ -11,6 +11,7 @@ server {
 	listen 443 ssl;
 	server_name sunkastudios.xyz www.sunkastudios.xyz *.sunkastudios.xyz;
 	root /home/ubuntu/SunkaStudiosWebServer/server/public;
+	index index.html;
 	
 	# block php requests
 	location ~* \.php$ {
@@ -34,10 +35,10 @@ server {
 	}
 
 	# serve static
-	location ~* \.(?:jpg|jpeg|png|gif|ico|css|js|woff2|webp|svg|mp4)$ {
+	location ~* \.(?:jpg|jpeg|png|gif|ico|css|js|html|woff2|webp|svg|mp4)$ {
 		expires 7d;
 		add_header Cache-Control "public";
-		try_files $uri =404;
+		try_files $uri $uri/ =404;
 	}
 	# serve via nodejs
 	location / {
