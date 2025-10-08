@@ -33,7 +33,7 @@ app.use(rateLimit({windowMS: 60000, max: 100}))
 app.use(helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      "script-src": ["'self'", `'${NONCE}'`], // fixed security nonce for ain files
+      "script-src": ["'self'", `'nonce-${NONCE}'`], // fixed security nonce for ain files
 	},
 }));
 // log requests
