@@ -29,7 +29,12 @@ console.log("Configuring Server...")
 // use rateLimit to prevent DDoS Attacks
 app.use(rateLimit({windowMS: 60000, max: 100}))
 // add safety headers
-app.use(helmet())
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "script-src": ["'self'", "'nonce-xyz123'"], // fixed security nonce for ain files
+	},
+}));
 // log requests
 app.use(morgan(":method :url :status - :response-time ms"))
 // use vhost to redirect requests to appropriate servers
