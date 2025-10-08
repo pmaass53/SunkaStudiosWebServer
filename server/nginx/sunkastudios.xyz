@@ -36,6 +36,7 @@ server {
 
 	# serve static
 	location ~* \.(?:jpg|jpeg|png|gif|ico|css|js|html|woff2|webp|svg|mp4)$ {
+		alias /home/ubuntu/SunkaStudiosWebServer/server/public;
 		expires 7d;
 		add_header Cache-Control "public";
 		try_files $uri $uri/ =404;
