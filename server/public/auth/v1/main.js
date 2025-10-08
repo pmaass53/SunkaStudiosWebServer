@@ -4,7 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const passwordToggle = document.getElementById('passwordToggle');
     const successMessage = document.getElementById('successMessage');
+    const loginButton = document.getElementsByClassName("login-btn")[0];
     // event listeners
+    loginButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const loginData = JSON.stringify({
+            username: emailInput.value,
+            password: passwordInput.value
+        })
+        var loginReq = new XMLHttpRequest()
+        loginReq.open("POST", "/v1/api/login")
+        loginReq.setRequestHeader("Content-Type", "application/json")
+        loginReq.send(loginData)
+    })
     form.querySelectorAll("input").forEach(input => {
         if (input.value.trim() !== '') {
             input.classList.add('has-value');
