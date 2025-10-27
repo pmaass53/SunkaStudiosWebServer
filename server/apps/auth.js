@@ -3,6 +3,7 @@ import fs from "fs"
 import path from "path"
 
 import { PUBLIC_DIR } from "../paths.js"
+import { AUTHDB } from "../database/auth_db.js"
 
 const auth_app = express()
 
@@ -30,6 +31,12 @@ auth_app.get("/v1/main.js", (req, res) => {
 auth_app.get("/v1/main.css", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/css"})
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "main.css")))
+})
+
+// login handling
+auth_app.post("/v1/api/login", (req, res) => {
+  res.writeHead(200, {"Content-Type": "text/plain"})
+  res.end("LOGIN!@#$%^&*()")
 })
 
 export default auth_app
