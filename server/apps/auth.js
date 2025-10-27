@@ -38,7 +38,9 @@ auth_app.get("/v1/main.css", (req, res) => {
 // login handling
 auth_app.post("/v1/api/login", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"})
-  res.end(req.body)
+  const { username, password } = JSON.parse(req.body)
+  console.log(`Login Request for ${username}: '${password}'`)
+  res.end("login?")
 })
 
 export default auth_app
