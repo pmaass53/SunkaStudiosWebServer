@@ -6,7 +6,7 @@ import sqlite3 from "sqlite3"
 // NOTE: path is relative to server.js
 const AUTH_DB_PATH = "./database/data/auth.db"
 
-const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err1) => {
+export const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err1) => {
   if (err1) {
     console.log("auth_db.js: Error Opening/Creating Auth Database")
     console.error(err1)
@@ -21,5 +21,3 @@ const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlit
     })
   }
 })
-
-export default AUTHDB
