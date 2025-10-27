@@ -9,8 +9,8 @@ const auth_app = express()
 
 const LATEST_VERSION = "v1"
 
-auth_app.use(express.json())
-auth_app.use(express.text())
+auth_app.use(express.json({ type: "application/json" }))
+auth_app.use(express.text({ type: "text/plain" }))
 auth_app.use(express.urlencoded({ extended: true }))
 
 auth_app.get("/", (req, res) => {
