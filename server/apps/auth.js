@@ -40,7 +40,7 @@ auth_app.get("/v1/main.css", (req, res) => {
 // login handling
 auth_app.post("/v1/api/login", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"})
-  const { username, password } = JSON.parse(req.body)
+  const { username, password } = req.body
   console.log(`Login Request for ${username}: '${password}'`)
   res.end("login?")
 })
