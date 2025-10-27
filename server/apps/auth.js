@@ -36,7 +36,7 @@ auth_app.get("/v1/main.css", (req, res) => {
 // login handling
 auth_app.post("/v1/api/login", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/plain"})
-  res.end("LOGIN!@#$%^&*()")
+  res.end(req.body)
 })
 
 export default auth_app
