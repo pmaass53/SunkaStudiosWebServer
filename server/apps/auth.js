@@ -10,6 +10,8 @@ const auth_app = express()
 const LATEST_VERSION = "v1"
 
 auth_app.use(express.json())
+auth_app.use(express.text())
+auth_app.use(express.urlencoded({ extended: true }))
 
 auth_app.get("/", (req, res) => {
   res.redirect(301, `/${LATEST_VERSION}/index.html`)
