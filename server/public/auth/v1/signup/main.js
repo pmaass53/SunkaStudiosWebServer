@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             password: passwordInput.value
         })
         var loginReq = new XMLHttpRequest()
-        loginReq.open("POST", "/v1/api/signup")
+        loginReq.open("POST", "/v1/signup/api/postdata")
         loginReq.setRequestHeader("Content-Type", "application/json")
         loginReq.send(signupData)
     })
