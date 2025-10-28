@@ -17,7 +17,7 @@ auth_app.get("/", (req, res) => {
   res.redirect(301, `/${LATEST_VERSION}/login/index.html`)
 })
 
-auth_app.get("/v1/ain.html", (req, res) => {
+auth_app.get("/v1/login/ain.html", (req, res) => {
   // res.writeHead(200, {"Content-Type": "text/html"})
   // res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "login", "ain.html")))
   res.writeHead(501, { "Content-Type": "text/plain" })
