@@ -2,6 +2,7 @@ console.log("auth_db.js: Initiating Authorization Database...")
 
 // import sqlite3 package for database
 import sqlite3 from "sqlite3"
+import bcrypt from "bcrypt"
 // set constant for path to auth database
 // NOTE: path is relative to server.js
 const AUTH_DB_PATH = "./database/data/auth.db"
