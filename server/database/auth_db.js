@@ -6,7 +6,7 @@ import sqlite3 from "sqlite3"
 // NOTE: path is relative to server.js
 const AUTH_DB_PATH = "./database/data/auth.db"
 
-export const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err1) => {
+const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err1) => {
   if (err1) {
     console.log("auth_db.js: Error Opening/Creating Auth Database")
     console.error(err1)
@@ -21,3 +21,12 @@ export const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE 
     })
   }
 })
+export function getUser(username, callback) {
+  AUTHDB.get("SELECT * FROM users WHERE username = ?", [username], callback);
+}
+
+export function createUser(username, password, callback) {
+  bcrypt.hash(password, 10).then(hash => {
+    AUTHDB.run("INSERT INTO users (username, password_hash) VALUES (?, ?)", [username, hash], callback);
+  });
+}
