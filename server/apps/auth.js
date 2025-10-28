@@ -3,7 +3,7 @@ import fs from "fs"
 import path from "path"
 
 import { PUBLIC_DIR } from "../paths.js"
-import { AUTHDB } from "../database/auth_db.js"
+import { getUser, createUser } from "../database/auth_db.js"
 
 const auth_app = express()
 
@@ -54,12 +54,36 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "signup", "main.css")))
 })
 
+// signup handling
+auth_app.post("/v1/signup/api/postdata", (req, res) => {
+  const { username, password } = req.body
+  // protect against SQL injections
+  const pattern = /^[A-Za-z0-9_]{3,20}$/;
+  if (pattern.test(username)) {
+    createUser(username, password, (err, user) => {
+      if (err) {
+        if (err.message.includes("UNIQUE")) {
+          res.writeHead(409, { "Content-Type": "text/plain" })
+          res.end("User already exists")
+        } else {
+          res.writeHead(500, { "Content-Type": "text/plain" })
+          res.end(err.toString())
+        }
+      } else {
+        res.writeHead(200, { "Content-Type": "text/plain" })
+        res.end(user.toString())
+      }
+    })
+  } else {
+    res.writeHead(400, { "Content-Type": "text/plain" })
+    res.end("Blocked for security reasons")
+  }
+})
+
 // login handling
 auth_app.post("/v1/login/api/postdata", (req, res) => {
-  res.writeHead(200, {"Content-Type": "text/plain"})
   const { username, password } = req.body
-  console.log(`Login Request for ${username}: '${password}'`)
-  res.end("Login is not yet fully supported")
+  // TODO: implement login
 })
 
 export default auth_app
