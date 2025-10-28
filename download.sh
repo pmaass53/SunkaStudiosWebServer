@@ -21,3 +21,4 @@ cd /home/ubuntu/SunkaStudiosWebServer/server
 pm2 start server.js
 
 echo "Update Complete"
+pm2 monit server
