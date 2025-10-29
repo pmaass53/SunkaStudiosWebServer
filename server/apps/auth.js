@@ -101,7 +101,7 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
           bcrypt.compare(password, user.password, (err, match) => {
             if (err) {
               console.error("Login/Bcrypt Error: ", err)
-              res.writeHead(500, { "Content-Type", "text/plain" })
+              res.writeHead(500, { "Content-Type": "text/plain" })
               res.end(err)
             } else {
               if (match) {
