@@ -1,6 +1,8 @@
 import express from "express"
 import fs from "fs"
 import path from "path"
+import bcrypt from "bcrypt"
+// import jwt from "jsonwebtoken"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { getUser, createUser } from "../database/auth_db.js"
@@ -59,22 +61,24 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
   const { username, password } = req.body
   // protect against SQL injections
   const pattern = /^[A-Za-z0-9_]{3,20}$/;
-  if (pattern.test(username)) {
-    createUser(username, password, (err, user) => {
-      if (err) {
-        if (err.message.includes("UNIQUE")) {
-          res.writeHead(409, { "Content-Type": "text/plain" })
-          res.end("User already exists")
+  if (username && password) {
+    if (pattern.test(username)) {
+      createUser(username, password, (err, user) => {
+        if (err) {
+          if (err.message.includes("UNIQUE")) {
+            res.writeHead(409, { "Content-Type": "text/plain" })
+            res.end("User already exists")
+          } else {
+            console.error("Signup/Database Error: ", err)
+            res.writeHead(500, { "Content-Type": "text/plain" })
+            res.end(err)
+          }
         } else {
-          res.writeHead(500, { "Content-Type": "text/plain" })
-          res.end(err.toString())
+          res.writeHead(201, { "Content-Type": "text/plain" })
+          res.end("User Created")
         }
-      } else {
-        res.writeHead(200, { "Content-Type": "text/plain" })
-        console.log(typeof user)
-        res.end(user)
-      }
-    })
+      })
+    }
   } else {
     res.writeHead(400, { "Content-Type": "text/plain" })
     res.end("Blocked for security reasons")
@@ -84,7 +88,38 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
 // login handling
 auth_app.post("/v1/login/api/postdata", (req, res) => {
   const { username, password } = req.body
-  // TODO: implement login
+  // protect against SQL injections
+  const pattern = /^[A-Za-z0-9_]{3,20}$/;
+  if (username && password) {
+    if (pattern.test(username)) {
+      getUser(username, (err, user) => {
+        if (err) {
+          console.error("Login/Database Error: ", err)
+          res.writeHead(500, { "Content-Type": "text/plain" })
+          res.end(err)
+        } else {
+          bcrypt.compare(password, user.password, (err, match) => {
+            if (err) {
+              console.error("Login/Bcrypt Error: ", err)
+              res.writeHead(500, { "Content-Type", "text/plain" })
+              res.end(err)
+            } else {
+              if (match) {
+                res.writeHead(200, { "Content-Type": "text/plain" })
+                res.end("Logged In")
+              } else {
+                res.writeHead(401, { "Content-Type": "text/plain" })
+                res.end("Username or password incorrect")
+              }
+            }
+          })
+        }
+      })
+    } else {
+      res.writeHead(400, { "Content-Type": "text/plain" })
+      res.end("Blocked for security reasons")
+    }
+  }
 })
 
 export default auth_app
