@@ -2,7 +2,7 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import bcrypt from "bcrypt"
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { getUser, createUser } from "../database/auth_db.js"
