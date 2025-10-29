@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 import { PUBLIC_DIR } from "../paths.js"
-import { getUser, createUser } from "../database/auth_db.js"
+import { getUser, createUser, getUsers } from "../database/auth_db.js"
 
 const auth_app = express()
 
@@ -54,6 +54,11 @@ auth_app.get("/v1/signup/main.js", (req, res) => {
 auth_app.get("/v1/signup/main.css", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/css"})
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "signup", "main.css")))
+})
+// dev testing; remove later
+auth_app.get("/dev/users", (req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" })
+  res.end(getUsers())
 })
 
 // signup handling
