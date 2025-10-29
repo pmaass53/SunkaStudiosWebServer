@@ -71,7 +71,8 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
         }
       } else {
         res.writeHead(200, { "Content-Type": "text/plain" })
-        res.end(user.toString())
+        console.log(typeof user)
+        res.end(user)
       }
     })
   } else {
