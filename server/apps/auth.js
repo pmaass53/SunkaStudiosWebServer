@@ -57,8 +57,16 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
 })
 // dev testing; remove later
 auth_app.get("/dev/users", (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" })
-  res.json(getUsers())
+  getUsers((err, users) => {
+    if (err) {
+      res.writeHead(200, { "Content-Type": "application/json" })
+      res.end(users)
+    } else {
+      console.error("Dev/Users: ", err)
+      res.writeHead(500, { "Content-Type": "text/plain" })
+      res.end("Error fetching users")
+    }
+  })
 })
 
 // signup handling
