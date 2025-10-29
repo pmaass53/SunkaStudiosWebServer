@@ -114,6 +114,9 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                 }
               }
             })
+          } else {
+            res.writeHead(401 { "Content-Type": "text/plain" })
+            res.end("Username or password incorrect")
           }
         }
       })
