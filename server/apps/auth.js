@@ -57,8 +57,8 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
 })
 // dev testing; remove later
 auth_app.get("/dev/users", (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/plain" })
-  res.end(getUsers())
+  res.writeHead(200, { "Content-Type": "application/json" })
+  res.json(getUsers())
 })
 
 // signup handling
