@@ -26,6 +26,10 @@ export function getUser(username, callback) {
   AUTHDB.get("SELECT * FROM users WHERE username = ?", [username], callback);
 }
 
+export function getUsers(callback) {
+  AUTHDB.all("SELECT * FROM users", callback)
+}
+
 export function createUser(username, password, callback) {
   bcrypt.hash(password, 10).then(hash => {
     AUTHDB.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hash], callback);
