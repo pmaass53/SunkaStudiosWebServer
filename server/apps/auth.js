@@ -66,7 +66,7 @@ auth_app.get("/dev/users", (req, res) => {
       console.log(users)
       if (users.length > 0) {
         res.writeHead(200, { "Content-Type": "application/json" })
-        res.end(users)
+        res.end(JSON.stringify(users))
       } else {
         res.writeHead(200, { "Content-Type": "application/json" })
         res.end("[]")
