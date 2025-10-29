@@ -98,21 +98,23 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
           res.writeHead(500, { "Content-Type": "text/plain" })
           res.end(err)
         } else {
-          bcrypt.compare(password, user.password, (err, match) => {
-            if (err) {
-              console.error("Login/Bcrypt Error: ", err)
-              res.writeHead(500, { "Content-Type": "text/plain" })
-              res.end(err)
-            } else {
-              if (match) {
-                res.writeHead(200, { "Content-Type": "text/plain" })
-                res.end("Logged In")
+          if (user) {
+            bcrypt.compare(password, user.password, (err, match) => {
+              if (err) {
+                console.error("Login/Bcrypt Error: ", err)
+                res.writeHead(500, { "Content-Type": "text/plain" })
+                res.end(err)
               } else {
-                res.writeHead(401, { "Content-Type": "text/plain" })
-                res.end("Username or password incorrect")
+                if (match) {
+                  res.writeHead(200, { "Content-Type": "text/plain" })
+                  res.end("Logged In")
+                } else {
+                  res.writeHead(401, { "Content-Type": "text/plain" })
+                  res.end("Username or password incorrect")
+                }
               }
-            }
-          })
+            })
+          }
         }
       })
     } else {
