@@ -64,7 +64,7 @@ auth_app.get("/dev/users", (req, res) => {
       res.end("Error fetching users")
     } else {
       console.log(users)
-      if (users) {
+      if (users.length > 0) {
         res.writeHead(200, { "Content-Type": "application/json" })
         res.end(users)
       }
