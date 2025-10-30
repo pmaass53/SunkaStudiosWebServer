@@ -19,9 +19,9 @@ auth_app.use(express.urlencoded({ extended: true }))
 auth_app.use(cookieParser())
 
 function authenticate(req, res, next) {
-  const token = req.cookie.auth_token
+  const token = req.cookies.auth_token
   if (token) {
-    jwt.verify(token, JWT_SECRET, (err, user) {
+    jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
         res.writeHead(401, { "Content-Type": "text/plain" })
         res.end("Invalid or Expired Token")
@@ -117,10 +117,13 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
           res.end("User Created")
         }
       })
+    } else {
+      res.writeHead(400, { "Content-Type": "text/plain" })
+      res.end("Blocked for security reasons")
     }
   } else {
     res.writeHead(400, { "Content-Type": "text/plain" })
-    res.end("Blocked for security reasons")
+    res.end("Missing Username/Password")
   }
 })
 
@@ -145,7 +148,6 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                 res.end(`Internal Server Error: ${err.message}`)
               } else {
                 if (match) {
-                  res.writeHead(200, { "Content-Type": "text/plain" })
                   const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" })
                   res.cookie("auth_token", token, {
                     httpOnly: true,
@@ -153,6 +155,7 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                     sameSite: "Strict",
                     maxAge: 3600000
                   })
+                  res.writeHead(200, { "Content-Type": "text/plain" })
                   res.end("Logged In")
                 } else {
                   res.writeHead(401, { "Content-Type": "text/plain" })
