@@ -10,6 +10,7 @@ import { getUser, createUser, getUsers } from "../database/auth_db.js"
 const auth_app = express()
 
 const LATEST_VERSION = "v1"
+const JWT_SECRET = "Hpai78AUJhs6ehHen4b"
 
 auth_app.use(express.json({ type: "application/json" }))
 auth_app.use(express.text({ type: "text/plain" }))
@@ -63,7 +64,6 @@ auth_app.get("/dev/users", (req, res) => {
       res.writeHead(500, { "Content-Type": "text/plain" })
       res.end("Error fetching users")
     } else {
-      console.log(users)
       if (users.length > 0) {
         res.writeHead(200, { "Content-Type": "application/json" })
         res.end(JSON.stringify(users))
@@ -90,7 +90,7 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
           } else {
             console.error("Signup/Database Error: ", err)
             res.writeHead(500, { "Content-Type": "text/plain" })
-            res.end(err)
+            res.end(`Internal Server Error: ${err.message}`)
           }
         } else {
           res.writeHead(201, { "Content-Type": "text/plain" })
@@ -122,10 +122,17 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
               if (err) {
                 console.error("Login/Bcrypt Error: ", err)
                 res.writeHead(500, { "Content-Type": "text/plain" })
-                res.end(err)
+                res.end(`Internal Server Error: ${err.message}`)
               } else {
                 if (match) {
                   res.writeHead(200, { "Content-Type": "text/plain" })
+                  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" })
+                  res.cookie("auth_token", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "Strict",
+                    maxAge: 3600000
+                  })
                   res.end("Logged In")
                 } else {
                   res.writeHead(401, { "Content-Type": "text/plain" })
