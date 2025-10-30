@@ -3,6 +3,7 @@ import fs from "fs"
 import path from "path"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import cookieParser from "cookie-parser"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { getUser, createUser, getUsers } from "../database/auth_db.js"
@@ -15,6 +16,25 @@ const JWT_SECRET = "Hpai78AUJhs6ehHen4b"
 auth_app.use(express.json({ type: "application/json" }))
 auth_app.use(express.text({ type: "text/plain" }))
 auth_app.use(express.urlencoded({ extended: true }))
+auth_app.use(cookieParser())
+
+function authenticate(req, res, next) {
+  const token = req.cookie.auth_token
+  if (token) {
+    jwt.verify(token, JWT_SECRET, (err, user) {
+      if (err) {
+        res.writeHead(401, { "Content-Type": "text/plain" })
+        res.end("Invalid or Expired Token")
+      } else {
+        req.user = user
+        next()
+      }
+    })
+  } else {
+    res.writeHead(401, { "Content-Type": "text/plain" })
+    res.end("Invalid or Expired Token")
+  }
+}
 
 auth_app.get("/", (req, res) => {
   res.redirect(301, `/${LATEST_VERSION}/login/index.html`)
@@ -57,7 +77,7 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "signup", "main.css")))
 })
 // dev testing; remove later
-auth_app.get("/dev/users", (req, res) => {
+auth_app.get("/dev/users", authenticate, (req, res) => {
   getUsers((err, users) => {
     if (err) {
       console.error("Dev/Users: ", err.toString())
