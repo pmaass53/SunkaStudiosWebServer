@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
     // functions
     function showError(fieldName, message) {
+        loginButton.disabled = true
         const formGroup = document.getElementById(fieldName).closest('.form-group');
         const errorElement = document.getElementById(fieldName + 'Error');
         if (formGroup && errorElement) {
@@ -124,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     function showSuccess(fieldName) {
+        loginButton.disabled = false
         const formGroup = document.getElementById(fieldName).closest('.form-group');
         const errorElement = document.getElementById(fieldName + 'Error');
         if (formGroup && errorElement) {
