@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         loginReq.send(signupData)
         loginReq.onload = () => {
             if (loginReq.status == 200) {
-                showNotification(loginReq.response)
+                showNotification(loginReq.response, "success", form)
             } else {
-                showNotification(loginReq.response)
+                showNotification(loginReq.response, "error", form)
             }
         }
     })
