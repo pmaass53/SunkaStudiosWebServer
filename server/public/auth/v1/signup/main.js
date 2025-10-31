@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
         loginReq.open("POST", "/v1/signup/api/postdata")
         loginReq.setRequestHeader("Content-Type", "application/json")
         loginReq.send(signupData)
+        loginReq.onload = () => {
+            if (loginReq.status == 200) {
+                document.getElementById("success-message").style.display = "block"
+            } else {
+                alert("An error Occured")
+            }
+        }
     })
     form.querySelectorAll("input").forEach(input => {
         if (input.value.trim() !== '') {
