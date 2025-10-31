@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         loginReq.send(signupData)
         loginReq.onload = () => {
             if (loginReq.status == 200) {
-                document.getElementById("success-message").style.display = "block"
+                showNotification(loginReq.response)
             } else {
-                alert("An error Occured")
+                showNotification(loginReq.response)
             }
         }
     })
@@ -140,3 +140,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+function showNotification(message, type = 'info', container = null) {
+        const targetContainer = container || document.querySelector('form');
+        if (!targetContainer) return;
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        let backgroundColor, borderColor, textColor;
+        switch (type) {
+            case 'error':
+                backgroundColor = 'rgba(239, 68, 68, 0.1)';
+                borderColor = 'rgba(239, 68, 68, 0.3)';
+                textColor = '#ef4444';
+                break;
+            case 'success':
+                backgroundColor = 'rgba(34, 197, 94, 0.1)';
+                borderColor = 'rgba(34, 197, 94, 0.3)';
+                textColor = '#22c55e';
+                break;
+            default:
+                backgroundColor = 'rgba(6, 182, 212, 0.1)';
+                borderColor = 'rgba(6, 182, 212, 0.3)';
+                textColor = '#06b6d4';
+        }
+        
+        notification.innerHTML = `
+            <div style="
+                background: ${backgroundColor}; 
+                backdrop-filter: blur(10px); 
+                border: 1px solid ${borderColor}; 
+                border-radius: 12px; 
+                padding: 12px 16px; 
+                margin-top: 16px; 
+                color: ${textColor}; 
+                text-align: center;
+                font-size: 14px;
+                animation: slideIn 0.3s ease;
+            ">
+                ${message}
+            </div>
+        `;
+        
+        targetContainer.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
