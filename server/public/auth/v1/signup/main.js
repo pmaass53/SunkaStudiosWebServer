@@ -19,8 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
         loginReq.setRequestHeader("Content-Type", "application/json")
         loginReq.send(signupData)
         loginReq.onload = () => {
-            if (loginReq.status == 200) {
+            if (loginReq.status == 201) {
                 showNotification(loginReq.response, "success", form)
+                setTimeout(() => {
+                    window.location.href = "https://dashboard.sunkastudios.xyz"
+                }, 3000)
             } else {
                 showNotification(loginReq.response, "error", form)
             }
