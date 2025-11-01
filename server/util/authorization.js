@@ -7,7 +7,6 @@ export function authenticate(req, res, next) {
   if (token) {
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
-        res.writeHead(401, { "Content-Type": "text/plain" })
         res.redirect(302, "https://auth.sunkastudios.xyz")
       } else {
         req.user = user
@@ -15,7 +14,6 @@ export function authenticate(req, res, next) {
       }
     })
   } else {
-    res.writeHead(401, { "Content-Type": "text/plain" })
     res.redirect(302, "https://auth.sunkastudios.xyz")
   }
 }
