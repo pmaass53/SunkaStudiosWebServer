@@ -8,7 +8,7 @@ export function authenticate(req, res, next) {
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
         res.writeHead(401, { "Content-Type": "text/plain" })
-        res.end("Invalid or Expired Token")
+        res.redirect(302, "https://auth.sunkastudios.xyz")
       } else {
         req.user = user
         next()
@@ -16,6 +16,6 @@ export function authenticate(req, res, next) {
     })
   } else {
     res.writeHead(401, { "Content-Type": "text/plain" })
-    res.end("Invalid or Expired Token")
+    res.redirect(302, "https://auth.sunkastudios.xyz")
   }
 }
