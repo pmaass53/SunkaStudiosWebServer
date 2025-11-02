@@ -31,7 +31,5 @@ export function getUsers(callback) {
 }
 
 export function createUser(username, password, callback) {
-  bcrypt.hash(password, 10).then(hash => {
-    AUTHDB.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hash], callback);
-  });
+  AUTHDB.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hash], callback);
 }
