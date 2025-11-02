@@ -12,7 +12,7 @@ const AUTHDB = new sqlite3.Database(AUTH_DB_PATH, sqlite3.OPEN_READWRITE | sqlit
     console.log("auth_db.js: Error Opening/Creating Auth Database")
     console.error(err1)
   } else {
-    AUTHDB.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)", (err2) => {
+    AUTHDB.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, permissions TEXT NOT NULL, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)", (err2) => {
       if (err2) {
         console.log("auth_db.js: Error Creating Tables Auth Database")
         console.error(err2)
