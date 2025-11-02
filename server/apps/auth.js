@@ -83,20 +83,22 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
   const pattern = /^[A-Za-z0-9_]{3,20}$/;
   if (username && password) {
     if (pattern.test(username)) {
-      createUser(username, password, (err, user) => {
-        if (err) {
-          if (err.message.includes("UNIQUE")) {
-            res.writeHead(409, { "Content-Type": "text/plain" })
-            res.end("User already exists")
+      bcrypt.hash(password, 10, (berr, hash) => {
+        createUser(hash, password, (serr, user) => {
+          if (serr) {
+            if (serr.message.includes("UNIQUE")) {
+              res.writeHead(409, { "Content-Type": "text/plain" })
+              res.end("User already exists")
+            } else {
+              console.error("Signup/Database Error: ", serr)
+              res.writeHead(500, { "Content-Type": "text/plain" })
+              res.end(`Internal Server Error: ${serr.message}`)
+            }
           } else {
-            console.error("Signup/Database Error: ", err)
-            res.writeHead(500, { "Content-Type": "text/plain" })
-            res.end(`Internal Server Error: ${err.message}`)
+            res.writeHead(201, { "Content-Type": "text/plain" })
+            res.end("User Created")
           }
-        } else {
-          res.writeHead(201, { "Content-Type": "text/plain" })
-          res.end("User Created")
-        }
+        })
       })
     } else {
       res.writeHead(400, { "Content-Type": "text/plain" })
