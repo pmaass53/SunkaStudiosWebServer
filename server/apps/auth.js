@@ -133,7 +133,6 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                 res.end(`Internal Server Error: ${err.message}`)
               } else {
                 if (match) {
-                  res.writeHead(200, { "Content-Type": "text/plain" })
                   const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" })
                   res.cookie("auth_token", token, {
                     httpOnly: true,
@@ -141,6 +140,7 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                     sameSite: "Strict",
                     maxAge: 3600000
                   })
+                  res.writeHead(200, { "Content-Type": "text/plain" })
                   res.end("Logged In")
                 } else {
                   res.writeHead(401, { "Content-Type": "text/plain" })
