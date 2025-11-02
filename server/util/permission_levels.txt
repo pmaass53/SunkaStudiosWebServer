@@ -1,0 +1,10 @@
+0 - Banned
+1 - Viewer (view pages) - DEFAULT
+2 - Trusted User (view more pages)
+3 - 
+4 - 
+5 - Moderator (manage some permissions)
+6 - Developper
+7 - 
+8 - Admin (manage all permissions, code, all sites)
+9 - Superuser (all)
