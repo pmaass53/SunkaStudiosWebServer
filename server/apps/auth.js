@@ -20,7 +20,27 @@ auth_app.use(express.urlencoded({ extended: true }))
 auth_app.use(cookieParser())
 
 auth_app.get("/", (req, res) => {
-  res.redirect(302, `/${LATEST_VERSION}/login/index.html?returnUrl=${encodeURIComponent(req.query.returnUrl) || "https://dashboard.sunkastudios.xyz"}`)
+  if (req.query.returnUrl) {
+    res.redirect(302, `/${LATEST_VERSION}/login/index.html?returnUrl=${encodeURIComponent(req.query.returnUrl)}`)
+  } else {
+    res.redirect(302, `/${LATEST_VERSION}/login/index.html`)
+  }
+})
+
+auth_app.get("/login", (req, res) => {
+  if (req.query.returnUrl) {
+    res.redirect(302, `/${LATEST_VERSION}/login/index.html?returnUrl=${encodeURIComponent(req.query.returnUrl)}`)
+  } else {
+    res.redirect(302, `/${LATEST_VERSION}/login/index.html`)
+  }
+})
+
+auth_app.get("/signup", (req, res) => {
+  if (req.query.returnUrl) {
+    res.redirect(302, `/${LATEST_VERSION}/signup/index.html?returnUrl=${encodeURIComponent(req.query.returnUrl)}`)
+  } else {
+    res.redirect(302, `/${LATEST_VERSION}/signup/index.html`)
+  }
 })
 
 auth_app.get("/v1/login/ain.html", (req, res) => {
