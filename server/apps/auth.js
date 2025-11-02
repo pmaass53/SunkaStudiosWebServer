@@ -82,7 +82,7 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
 // dev testing; remove later
 auth_app.get("/dev/users", authenticate, (req, res) => {
   console.log(req.user)
-  if (permitted(req.user, 2)) {
+  if (permitted(req.user.username, 2)) {
     getUsers((err, users) => {
       if (err) {
         console.error("Dev/Users: ", err.toString())
