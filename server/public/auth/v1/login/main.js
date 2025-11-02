@@ -8,7 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // setup search query params
     const searchParams = new URLSearchParams(window.location.search);
     // set signup link with search query params
-    document.getElementById("signup-link").href = `https://auth.sunkastudios.xyz/v1/signup/index.html?returnUrl=${searchParams.get("returnUrl")}`
+    if (searchParams.get("returnUrl")) {
+        document.getElementById("signup-link").href = `https://auth.sunkastudios.xyz/v1/signup/index.html?returnUrl=${encodeURIComponent(searchParams.get("returnUrl"))}`
+    } else {
+        document.getElementById("Signup-link").href = "https://auth.sunkastudios.xyz/v1/signup/index.html"
+    }
     // event listeners
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
