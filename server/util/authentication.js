@@ -7,7 +7,7 @@ export function authenticate(req, res, next) {
   if (token) {
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
-        res.redirect(302, "https://auth.sunkastudios.xyz")
+        res.redirect(302, "https://auth.sunkastudios.xyz/&return")
       } else {
         req.user = user
         next()
