@@ -20,7 +20,7 @@ auth_app.use(express.urlencoded({ extended: true }))
 auth_app.use(cookieParser())
 
 auth_app.get("/", (req, res) => {
-  res.redirect(301, `/${LATEST_VERSION}/login/index.html`)
+  res.redirect(301, `/${LATEST_VERSION}/login/index.html?returnUrl=${req.search.returnUrl}`)
 })
 
 auth_app.get("/v1/login/ain.html", (req, res) => {
