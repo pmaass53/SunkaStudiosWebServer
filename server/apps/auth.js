@@ -153,7 +153,11 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                 res.end(`Internal Server Error: ${err.message}`)
               } else {
                 if (match) {
-                  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" })
+                  const token = jwt.sign({
+                    username: user.username,
+                    email: user.email,
+                    privilege: user.privilege
+                  }, JWT_SECRET, { expiresIn: "1h" })
                   res.cookie("auth_token", token, {
                     httpOnly: true,
                     secure: true,
