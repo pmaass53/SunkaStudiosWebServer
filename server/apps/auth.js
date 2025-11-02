@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { getUser, createUser, getUsers } from "../database/auth_db.js"
-import { authenticate } from "../util/authorization.js"
+import { authenticate } from "../util/authentication.js"
 
 const auth_app = express()
 
