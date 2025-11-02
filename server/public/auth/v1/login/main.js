@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordToggle = document.getElementById('passwordToggle');
     const successMessage = document.getElementById('successMessage');
     const loginButton = document.getElementsByClassName("login-btn")[0];
+    // setup search query params
+    const searchParams = new URLSearchParams(window.location.search);
+    // set signup link with search query params
+    document.getElementById("signup-link").href = `https://auth.sunkastudios.xyz/v1/signup/index.html?returnUrl=${searchParams.get("returnUrl")}`
     // event listeners
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -20,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginReq.status == 200) {
                 showNotification(loginReq.response, "success", form)
                 setTimeout(() => {
-                    const searchParams = new URLSearchParams(window.location.search);
                     window.location.href = searchParams.get("returnUrl") || "https://dashboard.sunkastudios.xyz"
                 }, 3000)
             } else {
