@@ -3,33 +3,27 @@ import { getUser } from "../database/auth_db.js"
 
 export const JWT_SECRET = "56h9skoa9ojsh6hi9"
 
-export function authenticate(req, res, next) {
-  const token = req.cookies.auth_token
-  if (token) {
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-      if (err) {
-        const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
-        res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
-      } else {
-        req.user = user
-        next()
-      }
-    })
-  } else {
-    const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
-    res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
-  }
-}
-
-export function permitted(username, required_permission) {
-  getUser(username, (err, user) => {
-    if (err) {
-      console.error(`Authentication/Permitted: ${err.toString()}`)
-      return false
+export function authenticate(required_privilege = 0) {
+  return (req, res, next) => {
+    const token = req.cookies.auth_token
+    if (token) {
+      jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+          const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
+          res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
+        } else {
+          if (user.privilege >= required_privilege) {
+            req.user = user
+            next()
+          } else {
+            res.writeHead(401, { "Content-Type": "text/plain" })
+            res.end("You are not allowed to visit this site")
+          }
+        }
+      })
     } else {
-      console.log(user)
-      console.log(Object.keys(user))
-      return user.privilege >= required_permission
+      const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
+      res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
     }
-  })
+  }
 }
