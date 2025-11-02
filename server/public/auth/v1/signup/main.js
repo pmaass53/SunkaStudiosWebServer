@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchParams = new URLSearchParams(window.location.search);
     // set signup link with search query params
     if (searchParams.get("returnUrl")) {
-        document.getElementById("signin-link").href = `https://auth.sunkastudios.xyz/v1/login/index.html?returnUrl=${encodeURIComponent(searchParams.get("returnUrl"))}`
+        document.getElementById("login-link").href = `https://auth.sunkastudios.xyz/login?returnUrl=${encodeURIComponent(searchParams.get("returnUrl"))}`
     } else {
-        document.getElementById("Signin-link").href = "https://auth.sunkastudios.xyz"
+        document.getElementById("login-link").href = "https://auth.sunkastudios.xyz/login"
     }
     // event listeners
     loginButton.addEventListener("click", (e) => {
