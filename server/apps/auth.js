@@ -80,7 +80,7 @@ auth_app.get("/dev/users", authenticate, (req, res) => {
 
 // signup handling
 auth_app.post("/v1/signup/api/postdata", (req, res) => {
-  const { username, password } = req.body
+  const { username, password, email } = req.body
   // protect against SQL injections
   const pattern = /^[A-Za-z0-9_]{3,20}$/;
   if (username && password) {
