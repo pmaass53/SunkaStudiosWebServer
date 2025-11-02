@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginReq.status == 201) {
                 showNotification(loginReq.response, "success", form)
                 setTimeout(() => {
-                    window.location.href = "https://dashboard.sunkastudios.xyz"
+                    window.location.href = "https://auth.sunkastudios.xyz"
                 }, 3000)
             } else {
                 showNotification(loginReq.response, "error", form)
