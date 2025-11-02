@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-const JWT_SECRET = "56h9skoa9ojsh6hi9"
+export const JWT_SECRET = "56h9skoa9ojsh6hi9"
 
 export function authenticate(req, res, next) {
   const token = req.cookies.auth_token
