@@ -138,7 +138,8 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                     httpOnly: true,
                     secure: true,
                     sameSite: "Strict",
-                    maxAge: 3600000
+                    maxAge: 3600000,
+                    domain: ".sunkastudios.xyz"
                   })
                   res.writeHead(200, { "Content-Type": "text/plain" })
                   res.end("Logged In")
