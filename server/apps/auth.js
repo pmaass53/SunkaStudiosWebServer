@@ -17,7 +17,7 @@ const LATEST_VERSION = "v1"
 auth_app.use(express.json({ type: "application/json" }))
 auth_app.use(express.text({ type: "text/plain" }))
 auth_app.use(express.urlencoded({ extended: true }))
-auth_app.use(Parser())
+auth_app.use(CookieParser())
 
 auth_app.get("/", (req, res) => {
   res.redirect(301, `/${LATEST_VERSION}/login/index.html`)
