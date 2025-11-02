@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // setup search query params
     const searchParams = new URLSearchParams(window.location.search);
     // set signup link with search query params
-    if (searchParams.get("returnUrl")) {
+    if (searchParams.get("returnUrl") != null) {
         document.getElementById("login-link").href = `https://auth.sunkastudios.xyz/login?returnUrl=${encodeURIComponent(searchParams.get("returnUrl"))}`
     } else {
         document.getElementById("login-link").href = "https://auth.sunkastudios.xyz/login"
