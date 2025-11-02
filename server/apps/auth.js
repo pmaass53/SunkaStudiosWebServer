@@ -2,9 +2,11 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser"
 
 import { PUBLIC_DIR } from "../paths.js"
+import { JWT_SECRET } from "../util/authentication.js"
 import { getUser, createUser, getUsers } from "../database/auth_db.js"
 import { authenticate } from "../util/authentication.js"
 
@@ -15,7 +17,7 @@ const LATEST_VERSION = "v1"
 auth_app.use(express.json({ type: "application/json" }))
 auth_app.use(express.text({ type: "text/plain" }))
 auth_app.use(express.urlencoded({ extended: true }))
-auth_app.use(cookieParser())
+auth_app.use(Parser())
 
 auth_app.get("/", (req, res) => {
   res.redirect(301, `/${LATEST_VERSION}/login/index.html`)
@@ -84,7 +86,7 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
   if (username && password) {
     if (pattern.test(username)) {
       bcrypt.hash(password, 10, (berr, hash) => {
-        createUser(hash, password, (serr, user) => {
+        createUser(username, hash, (serr, user) => {
           if (serr) {
             if (serr.message.includes("UNIQUE")) {
               res.writeHead(409, { "Content-Type": "text/plain" })
@@ -131,6 +133,7 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                 res.end(`Internal Server Error: ${err.message}`)
               } else {
                 if (match) {
+                  res.writeHead(200, { "Content-Type": "text/plain" })
                   const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" })
                   res.cookie("auth_token", token, {
                     httpOnly: true,
@@ -138,7 +141,6 @@ auth_app.post("/v1/login/api/postdata", (req, res) => {
                     sameSite: "Strict",
                     maxAge: 3600000
                   })
-                  res.writeHead(200, { "Content-Type": "text/plain" })
                   res.end("Logged In")
                 } else {
                   res.writeHead(401, { "Content-Type": "text/plain" })
