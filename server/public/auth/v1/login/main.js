@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
         loginReq.open("POST", "/v1/login/api/postdata")
         loginReq.setRequestHeader("Content-Type", "application/json")
         loginReq.send(loginData)
+        loginReq.onload = () => {
+            if (loginReq.status == 200) {
+                showNotification(loginReq.response, "success", form)
+                setTimeout(() => {
+                    const searchParams = new URLSearchParams(window.location.search);
+                    window.location.href = searchParams.get("returnUrl") || "https://dashboard.sunkastudios.xyz"
+                }, 3000)
+            } else {
+                showNotification(loginReq.response, "error", form)
+            }
+        }
     })
     form.querySelectorAll("input").forEach(input => {
         if (input.value.trim() !== '') {
