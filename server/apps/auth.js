@@ -80,7 +80,7 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
   res.end(fs.readFileSync(path.join(PUBLIC_DIR, "auth", "v1", "signup", "main.css")))
 })
 // dev testing; remove later
-auth_app.get("/dev/users", authenticate(0), (req, res) => {
+auth_app.get("/dev/users", authenticate(1), (req, res) => {
   getUsers((err, users) => {
     if (err) {
       console.error("Dev/Users: ", err.toString())
