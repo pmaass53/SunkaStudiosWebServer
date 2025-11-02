@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordToggle = document.getElementById('passwordToggle');
     const successMessage = document.getElementById('successMessage');
     const loginButton = document.getElementsByClassName("login-btn")[0];
+    // setup search query params
+    const searchParams = new URLSearchParams(window.location.search);
+    // set signup link with search query params
+    document.getElementById("signin-link").href = `https://auth.sunkastudios.xyz/v1/login/index.html?returnUrl=${searchParams.get("returnUrl")}`
     // event listeners
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
