@@ -81,21 +81,26 @@ auth_app.get("/v1/signup/main.css", (req, res) => {
 })
 // dev testing; remove later
 auth_app.get("/dev/users", authenticate, (req, res) => {
-  getUsers((err, users) => {
-    if (err) {
-      console.error("Dev/Users: ", err.toString())
-      res.writeHead(500, { "Content-Type": "text/plain" })
-      res.end("Error fetching users")
-    } else {
-      if (users.length > 0) {
-        res.writeHead(200, { "Content-Type": "application/json" })
-        res.end(JSON.stringify(users))
+  if (permitted(req.user, 2)) {
+    getUsers((err, users) => {
+      if (err) {
+        console.error("Dev/Users: ", err.toString())
+        res.writeHead(500, { "Content-Type": "text/plain" })
+        res.end("Error fetching users")
       } else {
-        res.writeHead(200, { "Content-Type": "application/json" })
-        res.end("[]")
+        if (users.length > 0) {
+          res.writeHead(200, { "Content-Type": "application/json" })
+          res.end(JSON.stringify(users))
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" })
+          res.end("[]")
+        }
       }
-    }
-  })
+    })
+  } else {
+    res.writeHead(401, { "Content-Type": "text/plain" })
+    res.end("Not enough permissions")
+  }
 })
 
 // signup handling
