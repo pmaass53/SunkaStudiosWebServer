@@ -27,6 +27,8 @@ export function permitted(username, required_permission) {
       console.error(`Authentication/Permitted: ${err.toString()}`)
       return false
     } else {
+      console.log(user)
+      console.log(Object.keys(user))
       return user.privilege >= required_permission
     }
   })
