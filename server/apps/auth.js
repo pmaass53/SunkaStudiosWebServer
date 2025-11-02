@@ -86,7 +86,7 @@ auth_app.post("/v1/signup/api/postdata", (req, res) => {
   if (username && password) {
     if (pattern.test(username)) {
       bcrypt.hash(password, 10, (berr, hash) => {
-        createUser(username, hash, (serr, user) => {
+        createUser(username, hash, email, (serr, user) => {
           if (serr) {
             if (serr.message.includes("UNIQUE")) {
               res.writeHead(409, { "Content-Type": "text/plain" })
