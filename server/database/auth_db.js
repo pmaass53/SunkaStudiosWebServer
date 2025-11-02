@@ -31,5 +31,5 @@ export function getUsers(callback) {
 }
 
 export function createUser(username, password, callback) {
-  AUTHDB.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hash], callback);
+  AUTHDB.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, password], callback);
 }
