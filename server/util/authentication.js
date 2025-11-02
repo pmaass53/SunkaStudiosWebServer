@@ -7,13 +7,15 @@ export function authenticate(req, res, next) {
   if (token) {
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
-        res.redirect(302, "https://auth.sunkastudios.xyz/&return")
+        const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
+        res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
       } else {
         req.user = user
         next()
       }
     })
   } else {
-    res.redirect(302, "https://auth.sunkastudios.xyz")
+    const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
+    res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
   }
 }
