@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser"
 import { PUBLIC_DIR } from "../paths.js"
 import { JWT_SECRET } from "../util/authentication.js"
 import { getUser, createUser, getUsers } from "../database/auth_db.js"
-import { authenticate, permitted } from "../util/authentication.js"
+import { authenticate } from "../util/authentication.js"
 
 const auth_app = express()
 
