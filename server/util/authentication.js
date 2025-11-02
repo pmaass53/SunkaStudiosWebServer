@@ -17,7 +17,8 @@ export function authenticate(required_privilege = 0) {
             next()
           } else {
             res.writeHead(401, { "Content-Type": "text/plain" })
-            res.end("You are not allowed to visit this site")
+            res.end(user.privilege)
+            // res.end("You are not allowed to visit this site")
           }
         }
       })
