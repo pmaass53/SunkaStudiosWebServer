@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import { getUser } from "../database/auth_db.js"
 
 export const JWT_SECRET = "56h9skoa9ojsh6hi9"
 
@@ -18,4 +19,15 @@ export function authenticate(req, res, next) {
     const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
     res.redirect(302, `https://auth.sunkastudios.xyz/?returnUrl=${returnUrl}`)
   }
+}
+
+export function permitted(username, required_permission) {
+  getUser(username, (err, user) => {
+    if (err) {
+      console.error(`Authentication/Permitted: ${err.toString()}`)
+      return false
+    } else {
+      return user.privilege >= required_permission
+    }
+  })
 }
