@@ -2,7 +2,7 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import cookieParser from "cookie-parser"
-import { exec } from "node:child_process"
+import { spawn } from "node:child_process"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { authenticate } from "../util/authentication.js"
@@ -17,18 +17,18 @@ ctl_app.get("/", (req, res) => {
 })
 
 ctl_app.post("/git-update", authenticate(0), (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/plain" })
-  res.end("Updating Server...")
-  exec("../download.sh", (err, stdout, stderr) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "text/plain" })
-      res.end(err.toString())
-    } else {
-      if (stderr) {
-        console.warn("STDERR: ", stderr.toString())
-      }
-    }
-  })
+  try {
+    const proc = spawn("bash", ["../download.sh"], {
+      detached: true,
+      stdio: "ignore"
+    })
+    proc.unref()
+    res.writeHead(200, { "Content-Type": "text/plain" })
+    res.end("Server Updating")
+  } catch (err) {
+    res.writeHead(500, { "Content-Type": "text/plain" })
+    res.end(err.toString())
+  }
 })
 
 export default ctl_app
