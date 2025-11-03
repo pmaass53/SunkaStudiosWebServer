@@ -2,7 +2,7 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import cookieParser from "cookie-parser"
-import { execFile } from "node:child_process"
+import { exec } from "node:child_process"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { authenticate } from "../util/authentication.js"
@@ -17,11 +17,14 @@ ctl_app.get("/", (req, res) => {
 })
 
 ctl_app.post("/git-update", authenticate(0), (req, res) => {
-  execFile("../download.sh", (err) => {
+  exec("../download.sh", (err, stdout, stderr) => {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain" })
       res.end(err.toString())
     } else {
+      if (stderr) {
+        console.warn("STDERR: ", stderr.toString())
+      }
       res.writeHead(200, { "Content-Type": "text/plain" })
       res.end("Successfully Updated")
     }
