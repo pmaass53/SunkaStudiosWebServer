@@ -1,12 +1,15 @@
 import express from "express"
 import fs from "fs"
 import path from "path"
+import cookieParser from "cookie-parser"
 import { execFile } from "node:child_process"
 
 import { PUBLIC_DIR } from "../paths.js"
 import { authenticate } from "../util/authentication.js"
 
 const ctl_app = express()
+
+ctl_app.use(cookieParser())
 
 ctl_app.get("/", (req, res) => {
   res.writeHead(200, {"Content-Type": "text/html"})
