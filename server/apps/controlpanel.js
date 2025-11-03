@@ -17,7 +17,7 @@ ctl_app.get("/", (req, res) => {
 })
 
 ctl_app.post("/git-update", authenticate(0), (req, res) => {
-  execFile("../update.sh", (err) => {
+  execFile("../download.sh", (err) => {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain" })
       res.end(err.toString())
