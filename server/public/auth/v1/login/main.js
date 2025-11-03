@@ -28,7 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginReq.status == 200) {
                 showNotification(loginReq.response, "success", form)
                 setTimeout(() => {
-                    window.location.href = decodeURIComponent(searchParams.get("returnUrl")) || "https://dashboard.sunkastudios.xyz"
+                    if (searchParams.get("returnUrl") != null) {
+                        window.location.href = decodeURIComponent(searchParams.get("returnUrl"))
+                    } else {
+                        window.location.href = "https://dashboard.sunkastudios.xyz"
+                    }
                 }, 3000)
             } else {
                 showNotification(loginReq.response, "error", form)
