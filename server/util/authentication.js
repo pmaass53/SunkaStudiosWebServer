@@ -5,8 +5,8 @@ export const JWT_SECRET = "56h9skoa9ojsh6hi9"
 
 export function authenticate(required_privilege = 0) {
   return (req, res, next) => {
-    const token = req.cookies.auth_token
-    if (token) {
+    if (req.cookies.auth_token) {
+      const token = req.cookies.auth_token
       jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
           const returnUrl = encodeURIComponent(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
