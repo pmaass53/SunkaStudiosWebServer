@@ -30,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginReq.status == 201) {
                 showNotification(loginReq.response, "success", form)
                 setTimeout(() => {
-                    window.location.href = decodeURIComponent(searchParams.get("returnUrl")) || "https://auth.sunkastudios.xyz"
+                    if (searchParams.get("returnUrl") != null) {
+                        window.location.href = decodeURIComponent(searchParams.get("returnUrl"))
+                    } else {
+                        window.location.href = "https://auth.sunkastudios.xyz/login"
+                    }
                 }, 3000)
             } else {
                 showNotification(loginReq.response, "error", form)
