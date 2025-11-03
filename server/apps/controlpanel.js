@@ -17,6 +17,8 @@ ctl_app.get("/", (req, res) => {
 })
 
 ctl_app.post("/git-update", authenticate(0), (req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" })
+  res.end("Updating Server...")
   exec("../download.sh", (err, stdout, stderr) => {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain" })
@@ -25,8 +27,6 @@ ctl_app.post("/git-update", authenticate(0), (req, res) => {
       if (stderr) {
         console.warn("STDERR: ", stderr.toString())
       }
-      res.writeHead(200, { "Content-Type": "text/plain" })
-      res.end("Successfully Updated")
     }
   })
 })
