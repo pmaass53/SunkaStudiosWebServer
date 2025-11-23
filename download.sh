@@ -3,7 +3,7 @@ set -e
 
 echo "Updating Server"
 
-APP_DIR="/home/ubuntu/latest/SunkaStudiosWebServer"
+APP_DIR="/home/pmaass/latest/SunkaStudiosWebServer"
 REPO="https://github.com/pmaass53/SunkaStudiosWebServer"
 
 echo "Stopping Server"
@@ -17,7 +17,7 @@ echo "Installing Packages"
 npm install --omit-dev
 
 echo "Starting Server"
-cd /home/ubuntu/SunkaStudiosWebServer/server
+cd /home/pmaass/SunkaStudiosWebServer/server
 pm2 start server.js
 
 echo "Update Complete"
