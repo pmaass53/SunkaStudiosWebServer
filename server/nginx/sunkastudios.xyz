@@ -44,7 +44,7 @@ server {
 	# serve via nodejs
 	location / {
 		limit_req zone=req_limit_per_ip burst=200 nodelay;
-		try_files $uri @node;
+		try_files $uri $uri/ @node;
 	}
 	location @node {
 		proxy_pass http://localhost:8080;
