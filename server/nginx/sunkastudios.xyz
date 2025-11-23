@@ -10,7 +10,7 @@ server {
 	# use HTTPS
 	listen 443 ssl;
 	server_name sunkastudios.xyz www.sunkastudios.xyz *.sunkastudios.xyz;
-	root /home/ubuntu/SunkaStudiosWebServer/server/public;
+	root /home/pmaass/SunkaStudiosWebServer/server/public;
 	index index.html;
 	
 	# block php requests
@@ -36,7 +36,7 @@ server {
 
 	# serve static
 	location ~ \.(jpg|jpeg|png|gif|ico|css|js|html|woff2|webp|svg|mp4)$ {
-		alias /home/ubuntu/SunkaStudiosWebServer/server/public;
+		alias /home/pmaass/SunkaStudiosWebServer/server/public;
 		expires 7d;
 		add_header Cache-Control "public";
 		try_files $uri $uri/ =404;
@@ -57,8 +57,8 @@ server {
 	error_page 404 /404.html;
 
 	# SSL config - do not touch!
-	ssl_certificate /etc/letsencrypt/live/sunkastudios.xyz-0001/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/sunkastudios.xyz-0001/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/sunkastudios.xyz/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/sunkastudios.xyz/privkey.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
 	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
